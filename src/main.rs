@@ -1,8 +1,8 @@
-use std::{thread, time};
-use std::os::unix::raw::mode_t;
-use std::time::Duration;
 use crate::led::led::Led;
 use crate::led::led_status::LedStatus::ON;
+use std::os::unix::raw::mode_t;
+use std::time::Duration;
+use std::{thread, time};
 
 mod led;
 
@@ -25,9 +25,17 @@ fn single_threaded_blink(led_1: &mut Led, led_2: &mut Led) {
     let now = time::Instant::now();
     for i in 1..10 {
         led_1.blink(None);
-        println!("Led 1, Round: {}, Time Elapsed: {} ms", i, now.elapsed().as_millis());
+        println!(
+            "Led 1, Round: {}, Time Elapsed: {} ms",
+            i,
+            now.elapsed().as_millis()
+        );
         led_2.blink(None);
-        println!("Led 2, Round: {}, Time Elapsed: {} ms", i, now.elapsed().as_millis());
+        println!(
+            "Led 2, Round: {}, Time Elapsed: {} ms",
+            i,
+            now.elapsed().as_millis()
+        );
     }
 }
 
@@ -36,12 +44,20 @@ fn multi_threaded_blink(mut led_1: Led, led_2: &mut Led) {
     thread::spawn(move || {
         for i in 1..10 {
             led_1.blink(None);
-            println!("Led 1, Round: {}, Time Elapsed: {} ms", i, now.elapsed().as_millis());
+            println!(
+                "Led 1, Round: {}, Time Elapsed: {} ms",
+                i,
+                now.elapsed().as_millis()
+            );
         }
     });
 
     for i in 1..10 {
         led_2.blink(None);
-        println!("Led 2, Round: {}, Time Elapsed: {} ms", i, now.elapsed().as_millis());
+        println!(
+            "Led 2, Round: {}, Time Elapsed: {} ms",
+            i,
+            now.elapsed().as_millis()
+        );
     }
 }

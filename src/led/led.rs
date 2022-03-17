@@ -1,6 +1,6 @@
+use crate::led::led_status::LedStatus;
 use std::thread;
 use std::time::Duration;
-use crate::led::led_status::LedStatus;
 
 #[derive(Debug)]
 pub struct Led {
@@ -10,11 +10,23 @@ pub struct Led {
 }
 
 impl Led {
-    pub(crate) fn new(status: Option<LedStatus>, sleep_time: Option<Duration>, name: Option<&'static str>) -> Self {
+    pub(crate) fn new(
+        status: Option<LedStatus>,
+        sleep_time: Option<Duration>,
+        name: Option<&'static str>,
+    ) -> Self {
         if let Some(status) = status {
-            return Led { status, name, sleep_time };
+            return Led {
+                status,
+                name,
+                sleep_time,
+            };
         }
-        Led { status: LedStatus::OFF, name, sleep_time }
+        Led {
+            status: LedStatus::OFF,
+            name,
+            sleep_time,
+        }
     }
 
     pub(crate) fn status(&self) -> String {
@@ -57,11 +69,11 @@ impl Led {
 
 #[cfg(test)]
 mod led_tests {
-    use std::time;
-    use std::time::Duration;
-    use crate::Led;
     use crate::led::led_status::LedStatus;
     use crate::led::led_status::LedStatus::{OFF, ON};
+    use crate::Led;
+    use std::time;
+    use std::time::Duration;
 
     #[test]
     fn should_create_new_led_with_off_status() {
